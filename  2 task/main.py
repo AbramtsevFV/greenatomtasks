@@ -1,24 +1,21 @@
-from typing import Callable
+from typing import Callable, Generator, Iterable
 
 
-def create_handlers(callback: Callable) -> list:
-    handlers = []
+def create_handlers(callback: Callable) -> Generator[Callable]:
     for step in range(5):
-        handlers.append(lambda: callback(step))
-    print(handlers)
-
-    return handlers
+        yield lambda: callback(step)
 
 
 def plus(d):
     return d + 1
 
 
-def execute_handlers(handlers: list):
-    for row in handlers:
-        print(row())
+def execute_handlers(handlers: Iterable[Callable]):
+    for handler in handlers:
+        print(handler())
 
 
 if __name__ == '__main__':
-    handlers = create_handlers(plus)
-    execute_handlers(handlers)
+    handlers_list = create_handlers(plus)
+
+    execute_handlers(handlers_list)
