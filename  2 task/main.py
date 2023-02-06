@@ -1,7 +1,7 @@
 from typing import Callable, Generator, Iterable
 
 
-def create_handlers(callback: Callable) -> Generator[Callable]:
+def create_handlers(callback: Callable) -> Generator[Callable, None, None]:
     for step in range(5):
         yield lambda: callback(step)
 
