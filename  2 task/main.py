@@ -1,6 +1,6 @@
 from typing import Callable, Generator, Iterable
 
-
+"""Исправление кода"""
 def create_handlers(callback: Callable) -> Generator[Callable, None, None]:
     for step in range(5):
         yield lambda: callback(step)
