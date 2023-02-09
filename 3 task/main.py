@@ -1,42 +1,32 @@
 import requests
 from bs4 import BeautifulSoup
-page_url = 'https://greenatom.ru/'
+from colorama import Fore
+
+url = "https://greenatom.ru/"
+
+headers = {
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36'}
 
 
-def get_page(url: str) -> str:
-    """Возвращает содержание страницы"""
-    headers = {
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36'}
+def get_count_tags(url: str, headers: dict) -> None:
+    """Функция выводит в консоль количество его и количество тегов с атрибутами"""
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        html = response.text
+        soup = BeautifulSoup(html, "lxml")
 
-    res = requests.get(url, headers=headers)
+        tag_count = 0
+        attribute_count = 0
+        for tag in soup.descendants:
+            tag_count += 1
+            if hasattr(tag, 'attrs'):
+                attribute_count += len(tag.attrs)
 
-    if res.status_code == 200:
-        with open('./page/index.html', 'w') as f:
-            f.write(res.text)
+        print(Fore.GREEN + f"Общее количество вложенных HTML-тегов: {tag_count}")
+        print(Fore.GREEN + f"Количество вложенных HTML-тегов, содержащих атрибуты: {attribute_count}")
     else:
-        print(f"Ошибка подключения к {url}")
-
-def get_tags(tag):
-    print(tag)
-    while tag:
-        print(tag.findChildren)
-        tag = tag.find_next()
-        # print(tag, 888)
-        # if tag.nex:
-        #     print(tag.find('p'), 999)
-def parsing_page():
-    result = []
-    with open('./page/index.html', 'r') as f:
-        page = f.read()
-    soup = BeautifulSoup(page, "lxml")
-    tag_list = soup.find_all(recursive=True)
-    print(tag_list)
-    # for tag in tag_list[0]:
-    #     result.append(tag.find_next())
-    #     print(tag.findChildren())
-    #     # get_tags(tag)
+        print(Fore.LIGHTRED_EX + f"Неверный запрос, статус код {response.status_code}")
 
 
 if __name__ == "__main__":
-    # get_page(page_url)
-    parsing_page()
+    get_count_tegs(url, headers)
