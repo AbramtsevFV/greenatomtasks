@@ -4,4 +4,4 @@ from util import compare_versions
 
 
 if __name__ == '__main__':
-    compare_versions('3.1.5', '3.10')
+    compare_versions('3.15', '3.10')

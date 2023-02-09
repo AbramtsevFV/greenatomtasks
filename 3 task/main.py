@@ -29,4 +29,4 @@ def get_count_tags(url: str, headers: dict) -> None:
 
 
 if __name__ == "__main__":
-    get_count_tegs(url, headers)
+    get_count_tags(url, headers)

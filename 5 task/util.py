@@ -33,7 +33,7 @@ def compare_versions(version_a: str, version_b: str) -> Optional[int]:
         version_a = versions_parser(version_a)
         version_b = versions_parser(version_b)
 
-        return compare(version_a, version_b)
+        print(compare(version_a, version_b))
     else:
         print(Fore.LIGHTRED_EX + 'Неверный формат входных данных')
 
